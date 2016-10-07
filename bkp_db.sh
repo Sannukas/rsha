@@ -9,10 +9,10 @@ DT=`date +%Y-%m-%d`
 Y=`date +%Y` M=`date +%m` D=`date +%d` H=`date +%H` MIN=`date +%M`
 #database login 
 DBUSR="root"
-DBPWD=""
+DBPWD="qwerty"
 DBHOST="localhost"
 #list all current databases
-mysql -h $DBHOST -u $DBUSR -p $DBPWD -e "SHOW DATABASES;" > /tmp/databases.list
+mysql -h $DBHOST -u $DBUSR -p$DBPWD -e "SHOW DATABASES;" > /tmp/databases.list
 #make new folder with backup time
 BKP_DIR=/home/backups/mysql/$Y/$M/$D/$H-$MIN
 mkdir --parents --verbose $BKP_DIR
@@ -31,13 +31,13 @@ fi
 	let count=$count+1
 done
 if [ $skip -eq 0 ] ; then
-echo "++ $db"
+echo "Adding database: $db"
 #backup non-excluded databases
 cd $BKP_DIR
 bkp_name="$Y-$M-$D.$H-$MIN.$db.backup.sql"
 bkp_tar_name="$bkp_name.tar.gz"
-`/usr/bin/mysqldump -h "$DBHOST" "$db" -u "$DBUSR" > "$bkp_name"`
-echo "Backuping $bkp_name"
+`/usr/bin/mysqldump -h "$DBHOST" "$db" -u "$DBUSR" -p"$DBPWD" > "$bkp_name"`
+echo "Backing up $bkp_name"
 `/bin/tar -zcf "$bkp_tar_name" "$bkp_name"`
 echo "Compressing  $bkp_tar_name"
 `/bin/rm "$bkp_name"`
