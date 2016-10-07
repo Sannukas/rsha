@@ -36,8 +36,7 @@ echo "++ $db"
 cd $BKP_DIR
 bkp_name="$Y-$M-$D.$H-$MIN.$db.backup.sql"
 bkp_tar_name="$bkp_name.tar.gz"
-`/usr/bin/mysqldump -h "$DBHOST" --databases "$db" -u "$DBUSR"
---password="$DBPWD" > "$bkp_name"`
+`/usr/bin/mysqldump -h "$DBHOST" "$db" -u "$DBUSR" > "$bkp_name"`
 echo "Backuping $bkp_name"
 `/bin/tar -zcf "$bkp_tar_name" "$bkp_name"`
 echo "Compressing  $bkp_tar_name"
