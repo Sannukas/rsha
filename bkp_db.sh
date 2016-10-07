@@ -24,7 +24,7 @@ do
 skip=0
 let count=0
 while [ $count -lt $NUM_EX ] ; do
-#check against exclusions if not exclusion then skip
+#check against exclusions, skipped will be backed up (except 0)
 if [ "$db" = ${EX[$count]} ] ; then
 	let skip=1
 fi
